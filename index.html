@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="main-container">
+        <audio autoplay>
+            <source src="Touse/happy.m4a">
+        </audio>
         <div class="header">
             <nav class="navbar">
                 <a href="#home" data-target="home" class="nav-item">Home</a>
@@ -31,11 +34,10 @@
             </section>
             <section id="gift" class="section">
                 <div class="gift">
-                <h2>❤️ မွေးနေ့မှာ ပျော်ရွှင်ပါစေနော် ✨</h2>
-                <div id="info" class="info">
+                    <h2>❤️ မွေးနေ့မှာ ပျော်ရွှင်ပါစေနော် ✨</h2>
+                    <div id="info" class="info"> </div>
+                    <button class="gift-btn" id="start">Start ❤️</button>
                 </div>
-                <button class="gift-btn" id="start">Start ❤️</button>
-            </div>
             </section>
             <section id="album" class="section">
                 <div class="album">
@@ -43,19 +45,20 @@
                     
                 </div>
                 <div class="banner" id="banner">
-                <div class="slider" style="--quantity: 10">
-                    <div class="photo-item" style="--position: 1"><img src="/Touse/h1.jpeg" /></div>
-                    <div class="photo-item" style="--position: 2"><img src="/Touse/h2.jpeg" /></div>
-                    <div class="photo-item" style="--position: 3"><img src="/Touse/h3.jpg" /></div>
-                    <div class="photo-item" style="--position: 4"><img src="/Touse/h4.jpg" /></div>
-                    <div class="photo-item" style="--position: 5"><img src="/Touse/h5.jpg" /></div>
-                    <div class="photo-item" style="--position: 6"><img src="/Touse/h7.jpeg" /></div>
-                    <div class="photo-item" style="--position: 7"><img src="/Touse/h8.jpg" /></div>
-                    <div class="photo-item" style="--position: 8"><img src="/Touse/h9.jpg" /></div>
-                    <div class="photo-item" style="--position: 9"><img src="/Touse/h10.jpg" /></div>
-                    <div class="photo-item" style="--position: 10"><img src="/Touse/h11.jpg" /></div>
+                    <div id="flower" class="flower"></div>
+                    <div class="slider" style="--quantity: 10">
+                        <div class="photo-item" style="--position: 1"><img src="/Touse/h1.jpeg" /></div>
+                        <div class="photo-item" style="--position: 2"><img src="/Touse/h2.jpeg" /></div>
+                        <div class="photo-item" style="--position: 3"><img src="/Touse/h3.jpg" /></div>
+                        <div class="photo-item" style="--position: 4"><img src="/Touse/h4.jpg" /></div>
+                        <div class="photo-item" style="--position: 5"><img src="/Touse/h5.jpg" /></div>
+                        <div class="photo-item" style="--position: 6"><img src="/Touse/h7.jpeg" /></div>
+                        <div class="photo-item" style="--position: 7"><img src="/Touse/h8.jpg" /></div>
+                        <div class="photo-item" style="--position: 8"><img src="/Touse/h9.jpg" /></div>
+                        <div class="photo-item" style="--position: 9"><img src="/Touse/h10.jpg" /></div>
+                        <div class="photo-item" style="--position: 10"><img src="/Touse/h11.jpg" /></div>
+                    </div>
                 </div>
-            </div>
             </div>
             </section>
             <section id="wisher" class="section">
@@ -75,7 +78,7 @@
                                         preserveAspectRatio="xMidYMid slice"/>
                                     </pattern>
                                 </defs>
-                                <circle cx="40" cy="40" r="30" stroke="#6C63FF" stroke-width="3px" fill="url(#imgPattern)"/>
+                                <circle cx="40" cy="40" r="30" stroke="#00C9A7" stroke-width="3px" fill="url(#imgPattern)"/>
                             </svg>
                             <p>P. Stranger</p>
                         </div>
@@ -110,10 +113,16 @@
         import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        // 1. Scene Setup
+        function module3d(Id, modelPath, hasBackground = false) {
+            // 1. Scene Setup
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0a0a12);
-
+        // if (!hasBackground) {
+        //     scene.background = new THREE.Color(0x0a0a12);
+        // }else {
+        //      scene.background= new THREE.Color(0xF4F6FC);
+        // }
+        
         // 2. Camera Setup
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 1, 5);
@@ -122,7 +131,7 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
-        document.getElementById("info").appendChild(renderer.domElement);
+        document.getElementById(Id).appendChild(renderer.domElement);
 
         // 4. Lights
         const ambientLight = new THREE.AmbientLight(0xffffff, 1);
@@ -143,7 +152,7 @@
         // 6. Load the .glb File
         let model;
         const loader = new GLTFLoader();
-        loader.load('Untitled.glb', function (gltf) {
+        loader.load(modelPath, function (gltf) {
             model = gltf.scene;
             scene.add(model);
             
@@ -156,11 +165,18 @@
         }, undefined, function (error) {
             console.error('Error loading model:', error);
         });
+
+
         // Fireworks logic
         const fireworks = [];
-
+        let count;
         function createFirework() {
-            const particleCount = 120;
+            if(!hasBackground) {
+                count= 120;
+            }else {
+                count= 0;
+            }
+            const particleCount = count;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particleCount * 3);
             const colors = new Float32Array(particleCount * 3);
@@ -224,8 +240,9 @@
         function animate() {
             requestAnimationFrame(animate);
             if (model) {
-              model.rotation.y += 0.005;
+              model.rotation.y += 0.02;
             }
+            if (!hasBackground) {
             // Update Fireworks
             for (let i = fireworks.length - 1; i >= 0; i--) {
         const fw = fireworks[i];
@@ -251,6 +268,11 @@
             fireworks.splice(i, 1);
         }
             }
+            
+        }else {
+             console.log("this is flower!")
+        }
+            
             controls.update();
             renderer.render(scene, camera);
         }
@@ -263,6 +285,9 @@
         });
 
         animate();
+        }
+        module3d("info", "Untitled.glb");
+        module3d("flower", "Untitled1.glb", true);
     </script>
     <script src="main.js"></script>
 </body>
