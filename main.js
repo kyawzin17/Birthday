@@ -2,7 +2,6 @@ const navItem= document.querySelectorAll(".nav-item");
 const allSection= document.querySelectorAll("section");
 const headerHeight= document.querySelector(".header").offsetHeight;
 
-const underline= document.querySelector(".underline");
 const homeBtn= document.querySelector(".home-btn");
 
 let left;
@@ -26,10 +25,6 @@ navItem.forEach((item) => {
   // observer.observe(item);
     item.addEventListener("click", (e) => {
         e.preventDefault();
-        left= item.offsetLeft;
-        width= item.offsetWidth;
-        underline.style.left= left + "px";
-        underline.style.width= width + "px";
 
         const id= item.textContent.toLowerCase();
 
@@ -252,3 +247,16 @@ homeBtn.addEventListener("click", () => {
 });
 
 //scroll to
+
+//album
+
+const aitems= document.querySelectorAll(".a-item");
+
+aitems.forEach((item) => {
+  item.addEventListener("click", () => {
+    aitems.forEach((i) => {
+      i.classList.remove("a-active");
+    });
+    item.classList.add("a-active");
+  });
+});
