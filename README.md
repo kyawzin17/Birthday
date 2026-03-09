@@ -28,8 +28,8 @@ Vite Build Tool ကို အခြေခံပြီး **Three.js**, **HTML5**
 
 ### 1. Project ကို Clone လုပ်ပါ
 ```bash
-git clone [https://github.com/kyawzin17/birthday-project.git](https://github.com/kyawzin17/birthday-project.git)
-cd birthday-project
+git clone [https://github.com/kyawzin17/Birthday.git](https://github.com/kyawzin17/Birthday.git)
+cd Birthday
 ```  
 ### 2. လိုအပ်သော packages များ install လုပ်ပါ
 ```bash
