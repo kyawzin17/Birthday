@@ -42,7 +42,7 @@ npm run dev
 ```
 Project ကို အောက်ပါ link မှ ကြည့်ရှုနိုင်သည်။
 ```
-http://localhost:3000
+http://localhost:5173
 ```
 ## Folder Structure
 ```
@@ -57,8 +57,11 @@ http://localhost:3000
 |--README.md
 |--Untitled.glb
 |--Untitled1.glb
+```
 
 > Production Build
+
 ``` 
 npm run build
+
 ```
